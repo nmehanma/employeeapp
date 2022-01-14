@@ -1,11 +1,18 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Linking, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Title, Card, Button } from "react-native-paper";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 
 const Profile = () => {
+  const openDial = () => {
+    if (Platform.OS === "android") {
+      Linking.openURL("tel:12345");
+    } else {
+      Linking.openURL("telprompt:12345");
+    }
+  };
+
   return (
     <View style={styles.root}>
       <LinearGradient
@@ -26,17 +33,22 @@ const Profile = () => {
           }}
         />
       </View>
-      <View style={{ alignItems: "center", margin:15 }}>
+      <View style={{ alignItems: "center", margin: 15 }}>
         <Title>Ramesh verma</Title>
         <Text style={{ fontSize: 15 }}>Web developer</Text>
       </View>
-      <Card style={styles.mycard}>
+      <Card
+        style={styles.mycard}
+        onPress={() => {
+          Linking.openURL("mailto:abc@abc.com");
+        }}
+      >
         <View style={styles.cardContent}>
           <MaterialIcons name="email" size={32} color="#006aff" />
           <Text style={styles.mytext}>abc@abc.com</Text>
         </View>
       </Card>
-      <Card style={styles.mycard}>
+      <Card style={styles.mycard} onPress={() => openDial()}>
         <View style={styles.cardContent}>
           <Entypo name="phone" size={32} color="#006aff" />
           <Text style={styles.mytext}>123456</Text>
