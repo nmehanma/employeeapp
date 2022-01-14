@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
-import { TextInput } from "react-native-paper";
+import { StyleSheet, Text, View, Modal } from "react-native";
+import { TextInput, Button, BottomNavigation } from "react-native-paper";
 
 const CreateEmployee = () => {
   const [name, setName] = useState("");
@@ -8,7 +8,7 @@ const CreateEmployee = () => {
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
   const [picture, setPicture] = useState("");
-  const [model, setModel] = useState("");
+  const [modal, setModal] = useState(false);
 
   return (
     <View style={styles.root}>
@@ -45,7 +45,58 @@ const CreateEmployee = () => {
         mode="outlined"
         onChangeText={text => setSalary(text)}
       />
-    </View>
+
+        <Button
+          icon="upload"
+          style={styles.inputStyle}
+          mode="contained"
+          theme={theme}
+          onPress={() => setModal(true)}
+        >
+          Upload Image
+        </Button>
+        <Button
+          icon="content-save"
+          style={styles.inputStyle}
+          theme={theme}
+          mode="contained"
+          onPress={() => console.log("pressed")}
+        >
+          save
+        </Button>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => {
+          setModal(false);
+        }}
+      >
+        <View style={styles.modalView}>
+          <View style={styles.modalButtonView}>
+            <Button
+              icon="camera"
+              theme={theme}
+              mode="contained"
+              onPress={() => console.log("pressed")}
+            >
+              camera
+            </Button>
+            <Button
+              icon="image-area"
+              theme={theme}
+              mode="contained"
+              onPress={() => setModal(false)}
+            >
+              gallery
+            </Button>
+          </View>
+          <Button theme={theme} onPress={() => setModal(false)}>
+            Cancel
+          </Button>
+        </View>
+      </Modal>
+      </View>
   );
 };
 
@@ -60,6 +111,17 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     margin: 5
+  },
+  modalButtonView: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  },
+  modalView: {
+    position: "absolute",
+    bottom: 2,
+    width: "100%",
+    backgroundColor: "white"
   }
 });
 
