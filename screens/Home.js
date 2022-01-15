@@ -3,24 +3,24 @@ import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import { Card } from "react-native-paper";
 import { FAB } from "react-native-paper";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const data = [
     { id: 1, name: "player1", position: "web dev" },
     { id: 2, name: "player2", position: "android dev" },
     { id: 3, name: "player3", position: "ML expert" },
     { id: 4, name: "player4", position: "web dev" },
-    { id: 5, name: "player5", position: "web dev" },
-    { id: 6, name: "player6", position: "web dev" },
-    { id: 7, name: "player7", position: "web dev" },
-    { id: 8, name: "player8", position: "web dev" },
-    { id: 9, name: "player9", position: "web dev" },
-    { id: 10, name: "player10", position: "web dev" },
-    { id: 11, name: "player11", position: "web dev" }
+    { id: 5, name: "player5", position: "web dev" }
   ];
 
   const renderList = item => {
     return (
-      <Card style={styles.mycard} key={item.id}>
+      <Card
+        style={styles.mycard}
+        key={item.id}
+        onPress={() => {
+          navigation.navigate("Profile");
+        }}
+      >
         <View style={styles.cardview}>
           <Image
             style={{ width: 60, height: 60, borderLeftWidth: 60 / 2 }}
@@ -39,7 +39,7 @@ const Home = () => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={data}
         renderItem={({ item }) => {
@@ -47,11 +47,12 @@ const Home = () => {
         }}
       ></FlatList>
       <FAB
+        onPress={() => props.navigation.navigate("Create")}
         style={styles.fab}
         small={false}
         icon="plus"
-        theme={{colors:{accent:"#006aff"}}}
-        onPress={() => console.log("Pressed")}
+        theme={{ colors: { accent: "#006aff" } }}
+        // onPress={() => console.log("Pressed")}
       />
     </View>
   );
