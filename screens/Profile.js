@@ -4,7 +4,16 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Title, Card, Button } from "react-native-paper";
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 
-const Profile = () => {
+const Profile = props => {
+  const {
+    id,
+    name,
+    picture,
+    salary,
+    email,
+    phone,
+    position
+  } = props.route.params.item;
   const openDial = () => {
     if (Platform.OS === "android") {
       Linking.openURL("tel:12345");
@@ -28,14 +37,13 @@ const Profile = () => {
             marginTop: -50
           }}
           source={{
-            uri:
-              "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+            uri: picture
           }}
         />
       </View>
       <View style={{ alignItems: "center", margin: 15 }}>
-        <Title>Ramesh verma</Title>
-        <Text style={{ fontSize: 15 }}>Web developer</Text>
+        <Title>{name}</Title>
+        <Text style={{ fontSize: 15 }}>{position}</Text>
       </View>
       <Card
         style={styles.mycard}
@@ -45,19 +53,19 @@ const Profile = () => {
       >
         <View style={styles.cardContent}>
           <MaterialIcons name="email" size={32} color="#006aff" />
-          <Text style={styles.mytext}>abc@abc.com</Text>
+          <Text style={styles.mytext}>{email}</Text>
         </View>
       </Card>
       <Card style={styles.mycard} onPress={() => openDial()}>
         <View style={styles.cardContent}>
           <Entypo name="phone" size={32} color="#006aff" />
-          <Text style={styles.mytext}>123456</Text>
+          <Text style={styles.mytext}>{phone}</Text>
         </View>
       </Card>
       <Card style={styles.mycard}>
         <View style={styles.cardContent}>
           <MaterialIcons name="attach-money" size={32} color="#006aff" />
-          <Text style={styles.mytext}>10 cad</Text>
+          <Text style={styles.mytext}>{salary}</Text>
         </View>
       </Card>
       <View

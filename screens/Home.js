@@ -5,11 +5,36 @@ import { FAB } from "react-native-paper";
 
 const Home = ({ navigation }) => {
   const data = [
-    { id: 1, name: "player1", position: "web dev" },
-    { id: 2, name: "player2", position: "android dev" },
-    { id: 3, name: "player3", position: "ML expert" },
-    { id: 4, name: "player4", position: "web dev" },
-    { id: 5, name: "player5", position: "web dev" }
+    {
+      id: 1,
+      name: "player1",
+      email: "abc@example.com",
+      salary: "$5",
+      phone: "123",
+      position: "web dev",
+      picture:
+        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      id: 2,
+      name: "player2",
+      email: "abcd@example.com",
+      salary: "$10",
+      phone: "456",
+      position: "mobile dev",
+      picture:
+        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
+    },
+    {
+      id: 3,
+      name: "player3",
+      email: "abcde@example.com",
+      salary: "$15",
+      phone: "789",
+      position: "soft dev",
+      picture:
+        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
+    }
   ];
 
   const renderList = item => {
@@ -18,7 +43,7 @@ const Home = ({ navigation }) => {
         style={styles.mycard}
         key={item.id}
         onPress={() => {
-          navigation.navigate("Profile");
+          navigation.navigate("Profile", { item });
         }}
       >
         <View style={styles.cardview}>
@@ -47,7 +72,7 @@ const Home = ({ navigation }) => {
         }}
       ></FlatList>
       <FAB
-        onPress={() => props.navigation.navigate("Create")}
+        onPress={() => navigation.navigate("Create")}
         style={styles.fab}
         small={false}
         icon="plus"
