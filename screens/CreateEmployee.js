@@ -21,7 +21,14 @@ const CreateEmployee = () => {
         aspect: [1, 1],
         quality: 0.5
       });
-      console.log(data);
+      if (!data.cancelled) {
+        let newfile = {
+          uri: data.uri,
+          type: `test/${data.uri.split(".")[1]}`,
+          name: `test.${data.uri.split(".")[1]}`
+        };
+        handleUpload(newfile);
+      }
     } else {
       Alert.alert("you need to give up permission to work");
     }
@@ -36,10 +43,34 @@ const CreateEmployee = () => {
         aspect: [1, 1],
         quality: 0.5
       });
-      console.log(data);
+      if (!data.cancelled) {
+        let newfile = {
+          uri: data.uri,
+          type: `test/${data.uri.split(".")[1]}`,
+          name: `test.${data.uri.split(".")[1]}`
+        };
+        handleUpload(newfile);
+      }
     } else {
       Alert.alert("you need to give up permission to work");
     }
+  };
+
+  const handleUpload = image => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "employeeApp");
+    data.append("cloud_name", "doqlk4ocr");
+
+    fetch("https://api.cloudinary.com/v1_1/doqlk4ocr/image/upload", {
+      method: "post",
+      body: data
+    })
+      .then(res => res.json())
+      .then(data => {
+        setPicture(data.url);
+        setModal(false);
+      });
   };
 
   return (
@@ -79,7 +110,7 @@ const CreateEmployee = () => {
       />
 
       <Button
-        icon="upload"
+        icon={picture == "" ? "upload" : "check"}
         style={styles.inputStyle}
         mode="contained"
         theme={theme}
