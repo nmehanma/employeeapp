@@ -59,6 +59,7 @@ const CreateEmployee = () => {
   const handleUpload = image => {
     const data = new FormData();
     data.append("file", image);
+    data.append("folder", "employeeapp")
     data.append("upload_preset", "employeeApp");
     data.append("cloud_name", "doqlk4ocr");
 
