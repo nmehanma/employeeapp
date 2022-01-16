@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 
 // password=StkzsMJACfRq2Mqx
 
-const mongoUri =
-  "mongodb+srv://cnq:StkzsMJACfRq2Mqx@cluster0.w2tre.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dbUrl = process.env.DB_URL
 
 app.get("/", (req, res) => {
   res.send("Welcome to node js");
