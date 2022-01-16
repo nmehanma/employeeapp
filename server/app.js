@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-// password=StkzsMJACfRq2Mqx
+
 
 const dbUrl = process.env.DB_URL
 
