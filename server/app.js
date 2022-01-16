@@ -33,7 +33,7 @@ app.post("/send-data", (req, res) => {
   const employee = new Employee({
     name: req.body.name,
     email: req.body.email,
-    phone: req.body.picture,
+    phone: req.body.phone,
     picture: req.body.picture,
     salary: req.body.salary,
     positon: req.body.position
