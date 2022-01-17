@@ -1,41 +1,26 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  ActivityIndicator
+} from "react-native";
 import { Card } from "react-native-paper";
 import { FAB } from "react-native-paper";
 
 const Home = ({ navigation }) => {
-  const data = [
-    {
-      id: 1,
-      name: "player1",
-      email: "abc@example.com",
-      salary: "$5",
-      phone: "123",
-      position: "web dev",
-      picture:
-        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
-    },
-    {
-      id: 2,
-      name: "player2",
-      email: "abcd@example.com",
-      salary: "$10",
-      phone: "456",
-      position: "mobile dev",
-      picture:
-        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
-    },
-    {
-      id: 3,
-      name: "player3",
-      email: "abcde@example.com",
-      salary: "$15",
-      phone: "789",
-      position: "soft dev",
-      picture:
-        "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
-    }
-  ];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch("http://d926-99-250-161-7.ngrok.io")
+      .then(res => res.json())
+      .then(results => {
+        setData(results);
+        setLoading(false);
+      });
+  }, []);
 
   const renderList = item => {
     return (
@@ -50,8 +35,7 @@ const Home = ({ navigation }) => {
           <Image
             style={{ width: 60, height: 60, borderLeftWidth: 60 / 2 }}
             source={{
-              uri:
-                "https://images.unsplash.com/photo-1541911087797-f89237bd95d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHBlcnNvbnxlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60"
+              uri: item.picture
             }}
           ></Image>
           <View style={{ marginLeft: 10 }}>
@@ -65,12 +49,16 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => {
-          return renderList(item);
-        }}
-      ></FlatList>
+      {loading ? (
+        <ActivityIndicator size="large" color="0000ff" />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={({ item }) => {
+            return renderList(item);
+          }}
+        ></FlatList>
+      )}
       <FAB
         onPress={() => navigation.navigate("Create")}
         style={styles.fab}
