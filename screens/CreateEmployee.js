@@ -10,7 +10,29 @@ const CreateEmployee = () => {
   const [email, setEmail] = useState("");
   const [salary, setSalary] = useState("");
   const [picture, setPicture] = useState("");
+  const [position, setPosition] = useState("");
   const [modal, setModal] = useState(false);
+
+  const submitData = () => {
+    fetch("http://d926-99-250-161-7.ngrok.io/send-data", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        salary,
+        picture,
+        position
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  };
 
   const pickFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -59,7 +81,7 @@ const CreateEmployee = () => {
   const handleUpload = image => {
     const data = new FormData();
     data.append("file", image);
-    data.append("folder", "employeeapp")
+    data.append("folder", "employeeapp");
     data.append("upload_preset", "employeeApp");
     data.append("cloud_name", "doqlk4ocr");
 
@@ -109,6 +131,14 @@ const CreateEmployee = () => {
         mode="outlined"
         onChangeText={text => setSalary(text)}
       />
+      <TextInput
+        label="position"
+        style={styles.inputStyle}
+        value={position}
+        theme={theme}
+        mode="outlined"
+        onChangeText={text => setPosition(text)}
+      />
 
       <Button
         icon={picture == "" ? "upload" : "check"}
@@ -124,7 +154,7 @@ const CreateEmployee = () => {
         style={styles.inputStyle}
         theme={theme}
         mode="contained"
-        onPress={() => console.log("pressed")}
+        onPress={() => submitData()}
       >
         save
       </Button>
