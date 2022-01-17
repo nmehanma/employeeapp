@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Modal, Alert,KeyboardAvoidingView} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { TextInput, Button, BottomNavigation } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 // import * as Permissions from "expo-permissions";
@@ -31,7 +38,10 @@ const CreateEmployee = ({ navigation }) => {
       .then(res => res.json())
       .then(data => {
         Alert.alert(`${data.name} is saved successfully`);
-        navigation.navigate("Home")
+        navigation.navigate("Home");
+      })
+      .catch(err => {
+        Alert.alert("something went wrong");
       });
   };
 
@@ -94,6 +104,9 @@ const CreateEmployee = ({ navigation }) => {
       .then(data => {
         setPicture(data.url);
         setModal(false);
+      })
+      .catch(err => {
+        Alert.alert("Eerror while uploading");
       });
   };
 

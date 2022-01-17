@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  ActivityIndicator
-} from "react-native";
+import { StyleSheet, Text, View, Image, FlatList, Alert } from "react-native";
 import { Card } from "react-native-paper";
 import { FAB } from "react-native-paper";
 
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
+
+  const fetchData = () => {
     fetch("http://d926-99-250-161-7.ngrok.io")
       .then(res => res.json())
       .then(results => {
         setData(results);
         setLoading(false);
+      })
+      .catch(err => {
+        Alert.alert("something went wrong");
       });
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const renderList = item => {
@@ -49,16 +49,15 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {loading ? (
-        <ActivityIndicator size="large" color="0000ff" />
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={({ item }) => {
-            return renderList(item);
-          }}
-        ></FlatList>
-      )}
+      <FlatList
+        data={data}
+        renderItem={({ item }) => {
+          return renderList(item);
+        }}
+        onRefresh={() => fetchData()}
+        refreshing={loading}
+      ></FlatList>
+
       <FAB
         onPress={() => navigation.navigate("Create")}
         style={styles.fab}
